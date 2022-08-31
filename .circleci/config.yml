@@ -1,0 +1,44 @@
+version: 2.1
+jobs:
+  run_the_tests:
+    docker:
+      - image: circleci/node:17.2.0-browsers
+    steps:
+      - checkout
+      - run:
+          name: install all the things
+          command: |
+           npm install selenium-webdriver
+           npm install mocha
+      - run:
+          name: Run mocha tests
+          working_directory: tests
+          command: ../node_modules/.bin/mocha test_*.js
+  validate_the_html:
+    docker:
+      - image: cimg/openjdk:17.0.2
+    steps:
+      - checkout
+      - run:
+          name: run install validator deps
+          command: |
+            java --version
+            sudo apt-get update
+            sudo apt-get install pip
+            pip install html5validator
+      - run:
+          name: validate html
+          command: |
+            html5validator --ignore-re my_*.html  --root .
+workflows:
+#  version: 2.1
+  validate_and_test:
+    jobs:
+      - validate_the_html
+      - run_the_tests
+
+# https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally
+# circleci local execute --job validate_the_html
+# circleci local execute --job run_the_tests
+# must give job name whem running local
+# circleci local execute
