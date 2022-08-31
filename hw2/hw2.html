@@ -14,19 +14,18 @@
             return(my_str.toLowerCase()).replaceAll(' ', '-');
         }
         $(document).ready(function(){
-            let elements = $('.content').find("h2")
-
             var my_unordered_list = "<ul>\n";
-            
-            for ( let i of elements) {
-                let my_text = $(i).text();
+            //$( $('.content').find("h2") ).each( (index, element) => {
+            $('.content').find("h2").each((index, element) => {
+                let my_text = $(element).text();
                 let my_id = make_id(my_text);
-                $(i).attr("id", my_id);
+                $(element).attr("id", my_id);
                 my_unordered_list += "<li>" + "<a href=#" + my_id + ">" + my_text + "</a></li>\n";
-           }
+            });
+            
            my_unordered_list += "</ul>";
            $(".content h1").after(my_unordered_list);
-        })
+        });
       </script>
     <title>CNIT 133a Homework 2 - Jquery</title>
   </head>
