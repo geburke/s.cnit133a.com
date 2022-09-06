@@ -8,7 +8,7 @@ const timeout = 10000;
 
 const prod_url = 'https://cnit133a.com'
 const staging_url = 'https://s.cnit133a.com'
-const file_name = "../index.html"
+const file_name = "../hw2/hw2.html";
 
 let url = ""
 

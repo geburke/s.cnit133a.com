@@ -1,4 +1,8 @@
 version: 2.1
+orbs:
+  # import Cypress orb by specifying an exact version x.y.z
+  # or the latest version 1.x.x using "@1" syntax
+  cypress: cypress-io/cypress@2
 jobs:
   run_the_tests:
     docker:
@@ -31,11 +35,12 @@ jobs:
           command: |
             html5validator --ignore-re my_*.html  --root .
 workflows:
-#  version: 2.1
+#  version: 2.1 #
   validate_and_test:
     jobs:
       - validate_the_html
       - run_the_tests
+      - cypress/run
 
 # https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally
 # circleci local execute --job validate_the_html

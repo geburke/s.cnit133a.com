@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "mocha": "^9.2.0",
+    "selenium-webdriver": "^4.1.1"
+  },
+  "devDependencies": {
+    "cypress": "^10.7.0"
+  }
+}
