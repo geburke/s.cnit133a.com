@@ -1,1 +1,189 @@
-😻
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="CNIT 133a Homework" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <title>CNIT 133a Homework</title>
+  </head>
+  <body>
+    <h1 class="display-1" id="hw1_heading">CNIT 133a Homework</h1>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-sm">
+        <a
+          class="navbar-brand"
+          href="https://ccsf.instructure.com/courses/50293"
+          >Home</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="https://ccsf.instructure.com/courses/50293/announcements"
+                >Announcements</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="https://ccsf.instructure.com/courses/50293/assignments/syllabus"
+                >Syllabus</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="https://ccsf.instructure.com/courses/50293/modules"
+                >Modules</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="https://codebeautify.org/html-pretty-print"
+                >HTML pretty print</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fcnit133a.com"
+
+                >validate</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-sm">
+      <div class="row">
+        <div class="btn-group-vertical col-4">
+          <a
+            href="hw2/index.html"
+            class="btn btn-outline-secondary btn-md active"
+            role="button"
+            id="homework_jquery"
+            >Homework Jquery</a
+          >
+          <a
+            href="#"
+            class="btn btn-outline-secondary btn-md disabled"
+            role="button"
+            id="homework_d3"
+            >Homework D3</a
+          >
+          <a
+            href="#"
+            class="btn btn-outline-secondary btn-md disabled"
+            role="button"
+            id="homework_node"
+            >Homework Node</a
+          >
+          <a
+            href="#"
+            class="btn btn-outline-secondary btn-md disabled"
+            role="button"
+            id="homework_angular"
+            >Homework Angular</a
+          >
+          <a
+            href="#"
+            class="btn btn-outline-secondary btn-md disabled"
+            role="button"
+            id="homework_react"
+            >Homework React</a
+          >
+          <a
+            href="#"
+            class="btn btn-outline-secondary btn-md disabled"
+            role="button"
+            id="homework_vue"
+            >Homework Vue</a
+          >
+        </div>
+        <div class="col">
+          Hello World<br />
+        </div>
+      </div>
+    </div>
+
+    <footer class="text-lg-start bg-light text-muted">
+      <div class="container p-3 text-center">
+        Made with 🚀 and a 🚲 from
+        <a
+          class="text-decoration-none text-reset"
+          href="https://getbootstrap.com/"
+          >Bootstrap</a
+        >
+        in SF
+        <br />
+
+        <span id="footer_links"></span>
+        <script>
+          let link_status = null;
+          let link_build = null;
+          if ( window.location.hostname != "cnit133a.com") {
+
+            link_status = `
+          <a href="https://status.cnit133a.com/">
+          <img alt="Uptime Robot ratio (7 days)" src="https://img.shields.io/uptimerobot/ratio/7/m790429750-fd07748c612e99432fb76452">
+          </a>`;
+
+            link_build = `
+              <a href="https://circleci.com/gh/geburke/s.cnit133a.com/tree/dev"><img src="https://circleci.com/gh/geburke/s.cnit133a.com/tree/dev.svg?style=svg"></a>
+              `;
+
+            link_status = `
+              <a href="https://status.cnit133a.com/">
+              <img alt="Uptime Robot ratio (7 days)" src="https://img.shields.io/uptimerobot/ratio/7/m790429748-2d49b000bffeff0054dd0c09">
+            </a>`;
+
+          } else {
+            link_status = `
+              <a href="https://status.cnit133a.com/">
+              <img alt="Uptime Robot ratio (7 days)" src="https://img.shields.io/uptimerobot/ratio/7/m790429748-2d49b000bffeff0054dd0c09">
+              </a>`;
+
+            link_build = `
+              <a href="https://circleci.com/gh/geburke/cnit133a.com/tree/master"><img src="https://circleci.com/gh/geburke/cnit133a.com/tree/master.svg?style=svg"></a>
+              `;
+          }
+          links = link_build + link_status
+          document.getElementById("footer_links").innerHTML = links
+        </script>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
