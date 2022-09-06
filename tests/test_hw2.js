@@ -6,8 +6,8 @@ const { Key } = require('selenium-webdriver/ie');
 const { isTypedArray, isRegExp } = require('util/types');
 const timeout = 10000;
 
-const prod_url = 'https://cnit133a.com'
-const staging_url = 'https://s.cnit133a.com'
+const prod_url = 'https://cnit133a.com/hw2/hw2.html'
+const staging_url = 'https://s.cnit133a.com/hw2/hw2.html'
 const file_name = "../hw2/hw2.html";
 
 let url = ""
