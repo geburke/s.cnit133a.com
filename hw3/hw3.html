@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="D3 homework">
+<title>D3 Homework</title>
+<style>
+#chart rect{
+  fill: #4aaeea;
+}
+
+#chart text{
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end; 
+}
+
+.axis text{
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line{
+  fill: none;
+  stroke : #fff;
+  shape-rendering: crispEdges;
+}
+
+body{
+  background: #1a1a1a;
+  color : #eaeaea;
+  padding : 10px;
+}
+</style>
+</head>
+<body>
+<div id="chart"></div> 
+</body>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<script>
+
+//var margin = { top: 20, right: 20, bottom: 30, left: 40 };
+//var height = 200 - margin.top - margin.bottom;
+//var width = 500 - margin.left - margin.right;
+const height = 300;
+const width = 700;
+const margin = { top: 20,
+                 right: 20,
+                 bottom: 30,
+                 left: 40
+               };
+
+
+
+/*
+const xS = d3.scaleBand()
+  .domain(d3.range(0, grades.length))
+  .range([0, width])
+  .padding(0.1);
+
+  */
+
+  var graph = d3.select('#chart')
+    .append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height +  margin.top + margin.bottom )
+  console.log("first post");
+
+  d3.json("hw3data.json")
+    .then((data) => {
+      for(line of data) {
+        console.log("==>", line["students"]);
+      }
+
+    const xS = d3.scaleBand()
+      .domain(d3.range(0, data.length))
+      .range([0, width])
+      .padding(0.4);
+
+    data_students = data.map(data => data.students)
+
+    const yS = d3.scaleLinear()
+      .domain([0, d3.max(data_students)])
+      .range([0, height]);
+
+    console.log("max:", data_students);
+    console.log("d3max:", d3.max(data_students));
+
+    const verticalGuide = d3.scaleLinear()
+     .domain([0, d3.max(data_students)])
+     .range([height, 0]);
+
+    graph.selectAll('rect')
+      .data(data.map(data => data.students))
+      .join('rect')
+      .attr('width', xS.bandwidth)
+      .attr('height', (d) => { return yS(d); })
+      .attr('x', (d, i) => { return xS(i); })
+      .attr('y', (d) => { return height - yS(d); })
+
+    graph.append('text')
+    .attr('x', -(height / 2) - margin.bottom + 50 )
+    .attr('y', margin.left / 2 - 12)
+    .attr('transform', 'rotate(-90)')
+    .attr('text-anchor', 'middle')
+    .text("Number of " + Object.keys(data[0])[1])
+
+    graph.append('text')
+    .attr('x', width / 2 + margin.left)
+    .attr('y', height + margin.bottom)
+    .attr('text-anchor', 'middle')
+    .text(Object.keys(data[0])[0])
+
+    graph.append('g')
+      .call(d3.axisLeft(yS)
+      .scale(verticalGuide))
+      .attr('transform', 'translate(40, 0)');
+
+    graph.append('g')
+      .call(d3.axisBottom(xS))
+      .attr('transform', 'translate(20, 0)');
+
+
+
+
+    });
+    console.log("done")
+
+</script>
