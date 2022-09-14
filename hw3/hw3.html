@@ -39,28 +39,14 @@ body{
 
 <script>
 
-//var margin = { top: 20, right: 20, bottom: 30, left: 40 };
-//var height = 200 - margin.top - margin.bottom;
-//var width = 500 - margin.left - margin.right;
 const height = 300;
-const width = 700;
-const padding = 0.4;
+const width = 600;
+const padding = 0.2;
 const margin = { top: 20,
                  right: 20,
                  bottom: 30,
                  left: 40,
                };
-
-
-
-
-/*
-const xS = d3.scaleBand()
-  .domain(d3.range(0, grades.length))
-  .range([0, width])
-  .padding(0.1);
-
-  */
 
   var graph = d3.select('#chart')
     .append('svg')
@@ -75,55 +61,29 @@ const xS = d3.scaleBand()
       for(line of data) {
         console.log("==>", line["students"]);
       }
-/*
-    const xS = d3.scaleBand()
-      .domain(d3.range(0, data.length))
-      .range([0, width])
-      .padding(0.4);
 
-      */
-
-    data_students = data.map(data => data.students)
-/*
-    const xS = d3.scaleBand()
-      .domain(d3.range(0, data_labels.length))
-      .range([0, width + margin.left])
-      .padding(0.4);
-      */
-
-    //const xLabels = d3.scaleBand()
     const xS = d3.scaleBand()
       .domain(data.map(data => data.term))
       .range([0, width])
       .padding(padding)
-/*
-    const xS = d3.scaleBand()
-      .domain(data_labels)
-      .range([0, width ])
-      .padding(padding)
-      */
 
-      /*
-    const xLabels = d3.scaleBand()
-      .domain(data_labels)
-      .range([0, width - margin.left])
-      .padding(0.4);
-      */
-
+    const max_domain =  d3.max(data.map(data => data.students))
     const yS = d3.scaleLinear()
-      .domain([0, d3.max(data_students)])
+      .domain([0, max_domain ])
       .range([0, height]);
 
-    console.log("max:", data_students);
-    console.log("d3max:", d3.max(data_students));
-
     const verticalGuide = d3.scaleLinear()
-     .domain([0, d3.max(data_students)])
+     .domain([0, max_domain ])
      .range([height, 0]);
+
+    const my_colours = d3.scaleLinear()
+     .domain([0, data.length ])
+     .range([d3.interpolateSinebow(0.5), d3.interpolateSinebow(.9)])
 
     graph.selectAll('rect')
       .data(data)
       .join('rect')
+      .style('fill', (d,i) => { return my_colours(i) })
       .attr('width', xS.bandwidth)
       .attr('height', (d) => { return yS(d.students); })
       .attr('x', (d) => { return xS(d.term); })
@@ -131,7 +91,6 @@ const xS = d3.scaleBand()
 
     graph.append('text')
     .attr('x', -(height / 2) - margin.bottom + 50 )
-//    .attr('y', margin.left / 2 - margin.left )
     .attr('y', -30    )
     .attr('transform', 'rotate(-90)')
     .attr('text-anchor', 'middle')
@@ -144,35 +103,14 @@ const xS = d3.scaleBand()
     .attr('text-anchor', 'middle')
     .text(Object.keys(data[0])[0])
     .style('font-size', 13)
-/*
+
     graph.append('g')
       .call(d3.axisLeft(yS)
       .scale(verticalGuide))
-      .attr('transform', 'translate(' + margin.left + ', 0)');
-      */
-    graph.append('g')
-      .call(d3.axisLeft(yS)
-      .scale(verticalGuide))
-/*
-    graph.append('g')
-      .call(d3.axisBottom(xLabels))
-      .attr('transform', 'translate(' + margin.left + ',' + height + ')')
-      .selectAll("text")
-      .attr("transform", "translate(-10,10)rotate(-45)")
-      */
-     /*
-    graph.append('g')
-      .call(d3.axisBottom(xS))
-      .attr('transform', 'translate(' + margin.left + ',' + height + ')')
-      .selectAll("text")
-      .attr("transform", "translate(-10,10)rotate(-45)")
-      */
+
     graph.append('g')
       .call(d3.axisBottom(xS))
       .attr('transform', 'translate(0,' + height + ')')
-
-
-
 
     });
     console.log("done")
