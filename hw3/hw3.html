@@ -44,11 +44,13 @@ body{
 //var width = 500 - margin.left - margin.right;
 const height = 300;
 const width = 700;
+const padding = 0.4;
 const margin = { top: 20,
                  right: 20,
                  bottom: 30,
-                 left: 40
+                 left: 40,
                };
+
 
 
 
@@ -63,7 +65,9 @@ const xS = d3.scaleBand()
   var graph = d3.select('#chart')
     .append('svg')
     .attr('width', width + margin.left + margin.right)
-    .attr('height', height +  margin.top + margin.bottom )
+    .attr('height', height +  margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
   console.log("first post");
 
   d3.json("hw3data.json")
@@ -80,17 +84,31 @@ const xS = d3.scaleBand()
       */
 
     data_students = data.map(data => data.students)
-    data_labels = data.map(data => data.term)
-
+/*
     const xS = d3.scaleBand()
       .domain(d3.range(0, data_labels.length))
-      .range([0, width])
+      .range([0, width + margin.left])
       .padding(0.4);
+      */
 
+    //const xLabels = d3.scaleBand()
+    const xS = d3.scaleBand()
+      .domain(data.map(data => data.term))
+      .range([0, width])
+      .padding(padding)
+/*
+    const xS = d3.scaleBand()
+      .domain(data_labels)
+      .range([0, width ])
+      .padding(padding)
+      */
+
+      /*
     const xLabels = d3.scaleBand()
       .domain(data_labels)
-      .range([0, width])
+      .range([0, width - margin.left])
       .padding(0.4);
+      */
 
     const yS = d3.scaleLinear()
       .domain([0, d3.max(data_students)])
@@ -104,34 +122,54 @@ const xS = d3.scaleBand()
      .range([height, 0]);
 
     graph.selectAll('rect')
-      .data(data.map(data => data.students))
+      .data(data)
       .join('rect')
       .attr('width', xS.bandwidth)
-      .attr('height', (d) => { return yS(d); })
-      .attr('x', (d, i) => { return xS(i); })
-      .attr('y', (d) => { return height - yS(d); })
+      .attr('height', (d) => { return yS(d.students); })
+      .attr('x', (d) => { return xS(d.term); })
+      .attr('y', (d) => { return height - yS(d.students); })
 
     graph.append('text')
     .attr('x', -(height / 2) - margin.bottom + 50 )
-    .attr('y', margin.left / 2 - 12)
+//    .attr('y', margin.left / 2 - margin.left )
+    .attr('y', -30    )
     .attr('transform', 'rotate(-90)')
     .attr('text-anchor', 'middle')
     .text("Number of " + Object.keys(data[0])[1])
+    .style('font-size', 13)
 
     graph.append('text')
-    .attr('x', width / 2 + margin.left)
+    .attr('x', width / 2 + margin.left - 15 )
     .attr('y', height + margin.bottom)
     .attr('text-anchor', 'middle')
     .text(Object.keys(data[0])[0])
-
+    .style('font-size', 13)
+/*
     graph.append('g')
       .call(d3.axisLeft(yS)
       .scale(verticalGuide))
-      .attr('transform', 'translate(' + margin.left +', 0)');
-
+      .attr('transform', 'translate(' + margin.left + ', 0)');
+      */
+    graph.append('g')
+      .call(d3.axisLeft(yS)
+      .scale(verticalGuide))
+/*
     graph.append('g')
       .call(d3.axisBottom(xLabels))
-      .attr('transform', 'translate(0,' + height +')');
+      .attr('transform', 'translate(' + margin.left + ',' + height + ')')
+      .selectAll("text")
+      .attr("transform", "translate(-10,10)rotate(-45)")
+      */
+     /*
+    graph.append('g')
+      .call(d3.axisBottom(xS))
+      .attr('transform', 'translate(' + margin.left + ',' + height + ')')
+      .selectAll("text")
+      .attr("transform", "translate(-10,10)rotate(-45)")
+      */
+    graph.append('g')
+      .call(d3.axisBottom(xS))
+      .attr('transform', 'translate(0,' + height + ')')
 
 
 
