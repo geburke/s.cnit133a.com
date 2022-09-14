@@ -48,6 +48,23 @@ const margin = { top: 20,
                  left: 40,
                };
 
+  var tooltip = d3.select('body').append('div')
+   .style('position', 'absolute')
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("color", "black")
+    .style("border", "solid")
+    .style("border-width", "2px")
+    .style("border-radius", "5px")
+    .style("padding", "5px")
+    /*
+   .style('position', 'absolute')
+   .style('padding', '0 10px')
+   .style('background', 'white')
+   .style('opacity', 0);
+   */
+
   var graph = d3.select('#chart')
     .append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -88,6 +105,22 @@ const margin = { top: 20,
       .attr('height', (d) => { return yS(d.students); })
       .attr('x', (d) => { return xS(d.term); })
       .attr('y', (d) => { return height - yS(d.students); })
+      .on('mouseover', function(event, d) {
+        const[x, y] = d3.pointer(event)
+        tooltip.transition()
+          .style('opacity', .8);
+        tooltip.html(d.students)
+          .style('left', (x + 75) + 'px')
+          .style('top', (y + 30) + 'px');
+        d3.select(this)
+          .style('opacity', .4)
+      })
+    .on('mouseout', function(event, d) {
+      d3.select(this)
+        .style('opacity', 1);
+      tooltip.transition()
+        .style('opacity', 0);
+    });
 
     graph.append('text')
     .attr('x', -(height / 2) - margin.bottom + 50 )
