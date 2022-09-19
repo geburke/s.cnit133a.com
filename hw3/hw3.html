@@ -108,6 +108,9 @@ const margin = { top: 20,
       .attr('y', (d) => { return height - yS(d.students); })
       .on('mouseover', function(event, d) {
         const[x, y] = d3.pointer(event)
+        tooltip
+          .attr('id', "tt_" + d.term.toLowerCase().replace(' ','_'));
+
         tooltip.transition()
           .style('opacity', .8);
         tooltip.html(d.students)

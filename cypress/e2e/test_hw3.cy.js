@@ -73,6 +73,27 @@ describe(desc, () => {
         //  .should('exist');
     });
   });
+
+  it('check for tools tips', () => {
+    cy.get('@my_data').then(d => {
+      d.map(i => {
+        let my_id = i.term.toLowerCase().replace(' ', '_');
+        cy.get('svg').within(() => {
+          cy.get("rect[id='" + my_id + "']").BEEERS_ARE_GOOD();
+          cy.get("rect[id='" + my_id + "']")
+            .realHover();
+          cy.get("#" + "tt_" + i.term.toLowerCase().replace(' ', '_'))
+            .should("be.visble")
+            .and('contain.text', i.students)
+
+        }); 
+      });
+    });
+
+        //cy.get( rect > + '#' + my_id)
+        //cy.get( rect )
+        //  .should('exist');
+    });
  /*
     for( let my_id of my_data.map((i) => { i.term.toLowerCase().replace(' ','_')})) {
       cy.get( rect > + '#' + my_id)
