@@ -3,11 +3,20 @@
 const prod_url = 'https://cnit133a.com'
 const staging_url = 'https://s.cnit133a.com'
 const file_name = "./../../../hw3/hw3.html";
+const data_file = "./hw3/hw3data.json";
 
-const data_file = "./../../../hw3/hw3data.json";
-const my_data = require(data_file);
+/*
+cy.exec(`pwd`)
+ .then( (result) => {
+  cy.log(result.stderr);
+  cy.log(result.stdout);
+ });
+
+ */
+
 
 let url = ""
+
 
 function get_url() {
     let branch_name = cy.exec('git rev-parse --abbrev-ref HEAD')
@@ -28,17 +37,49 @@ const desc = "cnit133a homework 3";
 
 describe(desc, () => {
   beforeEach(() => {
-    url = get_url();
-    cy.log("url:", url)
-    cy.visit(url)
-  })
+    cy.readFile(data_file)
+      .then((my_data) => {
+        cy.wrap(my_data).as('my_data');
+
+        cy.log("moo->", cy.get('@my_data'));
+    });
+
+      url = get_url();
+      cy.log("url:", url)
+      cy.visit(url)
+  });
 
   it('check for ids', () => {
-    for( let my_id of my_data.map((i) => { i.term.toLowerCase().replace(' ','_'))} ) {
+    cy.get('@my_data').then(d => {
+      for (let line of d) {
+          cy.log("line:", line);
+          cy.log("id:", line.term.toLowerCase().replace(' ','_'));
+      }
+      d.map(i => {
+        let my_id = i.term.toLowerCase().replace(' ', '_');
+        cy.get('svg').within(() => {
+          //cy.get("rect[id='" + my_id + "']").then(rect => {
+          //  cy.log("Width : "+rect.attr("width"));
+          //  cy.log("Height : "+rect.attr("height"));
+          //});
+          cy.get("rect[id='" + my_id + "']")
+            .should('exist');
+
+        }); 
+      });
+
+        //cy.get( rect > + '#' + my_id)
+        //cy.get( rect )
+        //  .should('exist');
+    });
+  });
+ /*
+    for( let my_id of my_data.map((i) => { i.term.toLowerCase().replace(' ','_')})) {
       cy.get( rect > + '#' + my_id)
         .should('exist');
     }
   });
+  */
 
   /*
 
