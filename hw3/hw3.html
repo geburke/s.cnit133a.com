@@ -101,6 +101,7 @@ const margin = { top: 20,
       .data(data)
       .join('rect')
       .style('fill', (d,i) => { return my_colours(i) })
+      .attr('id', (d) => {return d.term.toLowerCase().replace(' ','_')})
       .attr('width', xS.bandwidth)
       .attr('height', (d) => { return yS(d.students); })
       .attr('x', (d) => { return xS(d.term); })
