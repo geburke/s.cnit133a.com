@@ -105,7 +105,7 @@ const margin = { top: 20,
 
         tooltip.transition()
           .style('opacity', .8);
-        tooltip.html(d.students)
+        tooltip.html("Term - Students<br>" + d.term + " - " + d.students)
           .style('left', (x + 75) + 'px')
           .style('top', (y + 30) + 'px');
         d3.select(this)

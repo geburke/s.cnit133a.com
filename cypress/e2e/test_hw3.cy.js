@@ -37,7 +37,7 @@ describe(desc, () => {
 
   it('check for ids', () => {
     cy.get('@my_data').then(d => {
-      d.map(i => {
+      d.reverse().map(i => {
         let my_id = i.term.toLowerCase().replace(' ', '_');
         cy.get('svg').within(() => {
           cy.get("rect[id='" + my_id + "']")
@@ -49,14 +49,16 @@ describe(desc, () => {
 
   it('check for tools tips', () => {
     cy.get('@my_data').then(d => {
-      d.map(i => {
+      d.reverse().map(i => {
         let my_id = i.term.toLowerCase().replace(' ', '_');
         cy.get("rect[id='" + my_id + "']")
-          .realHover()
-          .wait(399) // pause because tool tip takes a little while to transition
+          .realHover({ position: "center" })
+          .wait(999) // pause because tool tip takes a little while to transition
           .get("[id='tt_" + i.term.toLowerCase().replace(' ', '_') +"']" )
           .should("be.visible")
-          .and('contain.text', i.students)
+          .and('contain.text', "Term - Students" + i.term + " - " + i.students)
+          .wait(999) // pause because tool tip takes a little while to transition
+          .realHover({ position: "bottom" })
       });
     });
   });
