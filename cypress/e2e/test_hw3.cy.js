@@ -53,7 +53,7 @@ describe(desc, () => {
         let my_id = i.term.toLowerCase().replace(' ', '_');
         cy.get("rect[id='" + my_id + "']")
           .realHover()
-          .wait(399)
+          .wait(399) // pause because tool tip takes a little while to transition
           .get("[id='tt_" + i.term.toLowerCase().replace(' ', '_') +"']" )
           .should("be.visible")
           .and('contain.text', i.students)
